@@ -1,0 +1,21 @@
+# portwatch example configuration
+# Copy this file to portwatch.yaml and adjust as needed.
+
+targets:
+  - name: local-web
+    host: localhost
+    port: 8080
+    interval: 15s
+    timeout: 3s
+
+  - name: postgres
+    host: localhost
+    port: 5432
+    interval: 30s
+    timeout: 5s
+
+  - name: external-https
+    host: example.com
+    port: 443
+    interval: 60s
+    timeout: 10s
