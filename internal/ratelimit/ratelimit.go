@@ -56,3 +56,21 @@ func (l *Limiter) Reset(key string) {
 func (l *Limiter) Cooldown() time.Duration {
 	return l.cooldown
 }
+
+// Remaining returns the time remaining in the cooldown window for the given
+// key. If the key is not tracked or the cooldown has already elapsed,
+// Remaining returns zero.
+func (l *Limiter) Remaining(key string) time.Duration {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+
+	t, ok := l.last[key]
+	if !ok {
+		return 0
+	}
+	remaining := l.cooldown - l.now().Sub(t)
+	if remaining < 0 {
+		return 0
+	}
+	return remaining
+}
