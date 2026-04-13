@@ -16,4 +16,12 @@
 // (0-indexed). Attempt 0 always returns the base duration; each subsequent
 // attempt multiplies the previous delay by Multiplier (default 2.0) until
 // the configured maximum is reached.
+//
+// # Jitter
+//
+// To avoid thundering-herd problems when many goroutines retry simultaneously,
+// use DelayWithJitter instead of Delay. It adds a random fraction of the
+// computed delay so that retries are spread out over time:
+//
+//	time.Sleep(s.DelayWithJitter(attempt))
 package backoff
