@@ -60,3 +60,10 @@ func (a Alert) String() string {
 		a.Message,
 	)
 }
+
+// IsCritical reports whether the alert has SeverityCritical level.
+// It is a convenience method for callers that branch on severity without
+// importing the severity constants directly.
+func (a Alert) IsCritical() bool {
+	return a.Severity == SeverityCritical
+}
