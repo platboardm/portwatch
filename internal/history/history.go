@@ -67,3 +67,15 @@ func (r *Ring) Len() int {
 	defer r.mu.Unlock()
 	return r.count
 }
+
+// Filter returns entries matching the given predicate, in chronological order.
+func (r *Ring) Filter(fn func(Entry) bool) []Entry {
+	entries := r.Entries()
+	out := out[:0:0]
+	for _, e := range entries {
+		if fn(e) {
+			out = append(out, e)
+		}
+	}
+	return out
+}
